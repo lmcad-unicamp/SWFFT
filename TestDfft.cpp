@@ -82,6 +82,13 @@
 
 #define ALIGN 16
 
+extern "C" {
+  void init_timestep_();
+  void begin_timestep_();
+  void end_timestep_();
+  void exit_timestep_();
+}
+
 using namespace hacc;
 
 
@@ -298,6 +305,7 @@ void test(MPI_Comm comm,
   MPI_Barrier(CartComm);
 
   for(size_t i=0; i<repetitions; i++) {
+    begin_timestep_();
     if(rank==0) {
       std::cout << std::endl << "TESTING " << i << std::endl << std::endl;
     }
@@ -325,6 +333,7 @@ void test(MPI_Comm comm,
 
     // check array contents in r-space
     check_rspace(dfft, &a[0]);
+    end_timestep_();
   }
 }
 
@@ -332,6 +341,7 @@ void test(MPI_Comm comm,
 
 int main(int argc, char *argv[])
 {
+  init_timestep_();
 
   if(argc < 3) {
     std::cerr << "USAGE: " << argv[0] << " <n_repetitions> <ngx> [ngy ngz]" << std::endl;
@@ -363,6 +373,7 @@ int main(int argc, char *argv[])
 
   test(MPI_COMM_WORLD, repetitions, ng);
   
+  exit_timestep_();
   MPI_Finalize();
   
   return 0;

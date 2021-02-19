@@ -77,7 +77,7 @@ DFFT_MPI_CXXFLAGS ?= -g -O3 -Wall
 DFFT_MPI_FFLAGS ?= -g -O3 -cpp
 
 # linker flags
-DFFT_MPI_LDFLAGS ?= 
+DFFT_MPI_LDFLAGS ?= ../kernel_stats/kernel_stats.o
 
 # additional Fortran linker flags
 # sometimes this also needs -lmpi++, -lmpicxx, -lmpi_cxx, etc
@@ -107,12 +107,10 @@ fortran: $(DFFT_MPI_DIR)/TestFDfft
 utilities: $(DFFT_MPI_DIR)/CheckDecomposition
 
 .PHONY: clean
-clean: 
+clean:
 	rm -rf $(DFFT_MPI_DIR) *.mod
 
-
-
-$(DFFT_MPI_DIR): 
+$(DFFT_MPI_DIR):
 	mkdir -p $(DFFT_MPI_DIR)
 
 $(DFFT_MPI_DIR)/%.o: %.c | $(DFFT_MPI_DIR)
@@ -124,17 +122,11 @@ $(DFFT_MPI_DIR)/%.o: %.cpp | $(DFFT_MPI_DIR)
 $(DFFT_MPI_DIR)/%.o: %.f90 | $(DFFT_MPI_DIR)
 	$(DFFT_MPI_FC) $(DFFT_MPI_FFLAGS) $(DFFT_MPI_CPPFLAGS) -c -o $@ $<
 
-
-
 $(DFFT_MPI_DIR)/TestDfft: $(DFFT_MPI_DIR)/TestDfft.o $(DFFT_MPI_DIR)/distribution.o
 	$(DFFT_MPI_CXX) $(DFFT_MPI_CXXFLAGS) -o $@ $^ $(DFFT_MPI_LDFLAGS)
 
-
-
 $(DFFT_MPI_DIR)/CheckDecomposition: $(DFFT_MPI_DIR)/CheckDecomposition.o $(DFFT_MPI_DIR)/distribution.o
 	$(DFFT_MPI_CC) $(DFFT_MPI_CFLAGS) -o $@ $^ $(DFFT_MPI_LDFLAGS)
-
-
 
 $(DFFT_MPI_DIR)/FDfft.o: $(DFFT_MPI_DIR)/FDistribution.o
 
