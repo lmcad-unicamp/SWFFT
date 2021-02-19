@@ -88,13 +88,9 @@ DFFT_FFTW_HOME ?= $(shell dirname $(shell dirname $(shell which fftw-wisdom)))
 DFFT_FFTW_CPPFLAGS ?= -I$(DFFT_FFTW_HOME)/include
 DFFT_FFTW_LDFLAGS ?= -L$(DFFT_FFTW_HOME)/lib -lfftw3 -lm
 
-
-
 # these should not usuall require modification
 DFFT_MPI_CPPFLAGS += $(DFFT_FFTW_CPPFLAGS)
 DFFT_MPI_LDFLAGS += $(DFFT_FFTW_LDFLAGS)
-
-
 
 default: nativec utilities
 
