@@ -77,7 +77,7 @@ DFFT_MPI_CXXFLAGS ?= -g -O3 -Wall
 DFFT_MPI_FFLAGS ?= -g -O3 -cpp
 
 # linker flags
-DFFT_MPI_LDFLAGS ?= ../kernel_stats/kernel_stats.o
+DFFT_MPI_LDFLAGS ?= ../../utils/kernel_stats.o
 
 # additional Fortran linker flags
 # sometimes this also needs -lmpi++, -lmpicxx, -lmpi_cxx, etc
