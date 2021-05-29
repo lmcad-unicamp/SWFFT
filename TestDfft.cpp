@@ -86,6 +86,7 @@ extern "C" {
   void init_timestep_();
   void begin_timestep_();
   void end_timestep_();
+	void after_timestep_();
   void exit_timestep_();
 }
 
@@ -335,6 +336,7 @@ void test(MPI_Comm comm,
     check_rspace(dfft, &a[0]);
     end_timestep_();
   }
+	after_timestep_();
 }
 
 
